@@ -19,28 +19,27 @@ As the secrets.toml file above is not committed to GitHub, you need to pass its 
 ![Secrets](https://github.com/Aastha22j02/Google-Sheet/blob/main/Image/edit-secrets.png)
 
 ### Write your Streamlit app
+```bash
+# streamlit_app.py
 
 import pandas as pd
-
 import streamlit as st
 
-sheets_url = "https://docs.google.com/spreadsheets/d/1mUrRe9SlUWKlUtt0LPmV3hgt6heyFAZr0RsHhg4mKcw/edit#gid=0"
-
-### # Read in data from the Google Sheet.
-
-### # Uses st.cache_data to only rerun when the query changes or after 10 min.
-
+# Read in data from the Google Sheet.
+# Uses st.cache_data to only rerun when the query changes or after 10 min.
 @st.cache_data(ttl=600)
-
 def load_data(sheets_url):
     csv_url = sheets_url.replace("/edit#gid=", "/export?format=csv&gid=")
     return pd.read_csv(csv_url)
 
-df = load_data(st.secrets['demo']["public_gsheets_url"])
+df = load_data(st.secrets["public_gsheets_url"])
 
-### # Print results.
+# Print results.
 for row in df.itertuples():
     st.write(f"{row.name} has a :{row.pet}:")
+```
+
+
 
 ![your app should look like this](https://github.com/Aastha22j02/Google-Sheet/blob/main/Image/streamlit-app.png)
 
